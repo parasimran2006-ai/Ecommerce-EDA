@@ -20,9 +20,10 @@ st.write(df.head())
 
 # Dataset Info
 st.header("Dataset Information")
-buffer = []
-df.info(buf=buffer.append)
-info_str = "\n".join(buffer)
+import io
+buffer = io.StringIO()
+df.info(buf=buffer)
+info_str = buffer.getvalue()
 st.text(info_str)
 
 # Summary Statistics
@@ -96,8 +97,8 @@ st.pyplot(fig)
 # Pairplot
 st.header("Pairplot of Numerical Features")
 st.write("Pairplot of numerical variables (quantity, price, discount, revenue)")
-sns.pairplot(df[num_cols], diag_kind="kde", corner=True, palette="husl")
-st.pyplot(plt.gcf())
+pairplot = sns.pairplot(df[num_cols], diag_kind="kde", corner=True, palette="husl")
+st.pyplot(pairplot.fig)
 
 # Conclusion
 st.header("📌 Conclusion")
